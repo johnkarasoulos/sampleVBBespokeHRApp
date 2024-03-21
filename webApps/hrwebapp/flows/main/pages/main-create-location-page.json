@@ -1,0 +1,80 @@
+{
+  "title": "Create Location",
+  "description": "Creates new Location",
+  "variables": {
+    "createLocationChainInProgress": {
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "location": {
+      "type": "createLocationRequest"
+    }
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.createLocationRequest": {
+      "endpoint": "create_Location",
+      "service": "businessObjects",
+      "path": "request"
+    },
+    "businessObjectsServiceErrorResponseType": {
+      "body": {
+        "status": "string",
+        "title": "string",
+        "o:errorDetails": [
+          {
+            "detail": "string",
+            "o:errorCode": "string"
+          }
+        ]
+      },
+      "status": "number"
+    },
+    "createLocationRequest": {
+      "location": "string"
+    }
+  },
+  "eventListeners": {
+    "backButtonClicked": {
+      "chains": [
+        {
+          "chain": "goBackChain"
+        }
+      ]
+    },
+    "saveButtonClicked": {
+      "chains": [
+        {
+          "chain": "createLocationChain"
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chain": "application:toggleDrawerHandler"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-toolbar": {
+        "path": "ojs/ojtoolbar"
+      },
+      "oj-validation-group": {
+        "path": "ojs/ojvalidationgroup"
+      }
+    }
+  }
+}

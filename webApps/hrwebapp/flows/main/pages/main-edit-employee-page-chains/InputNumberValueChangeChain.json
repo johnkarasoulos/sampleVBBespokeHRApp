@@ -1,0 +1,46 @@
+{
+  "description": "",
+  "root": "callFunctionValidateSalary",
+  "actions": {
+    "callFunctionValidateSalary": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "ValidateSalary",
+        "params": [
+          "{{ $page.variables.employee.salary }}"
+        ]
+      },
+      "outcomes": {
+        "success": "ifEmployee"
+      }
+    },
+    "ifEmployee": {
+      "module": "vb/action/builtin/ifAction",
+      "parameters": {
+        "condition": "[[ $page.variables.employee.salary > 10000 ]]"
+      },
+      "outcomes": {
+        "true": "fireNotification",
+        "false": "fireDataProviderEvent"
+      }
+    },
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf"
+      }
+    },
+    "fireDataProviderEvent": {
+      "module": "vb/action/builtin/fireDataProviderEventAction",
+      "parameters": {}
+    }
+  },
+  "variables": {
+    "value": {
+      "required": true,
+      "type": "any",
+      "input": "fromCaller"
+    }
+  }
+}

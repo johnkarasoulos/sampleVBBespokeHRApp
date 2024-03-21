@@ -1,0 +1,58 @@
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div role="image" class="vb-web-applayout-header-image-stripe"></div>
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button on-oj-action="[[$listeners.toggleDrawer]]" chroming="borderless"
+                   display="icons">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-item">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="main newdepartment"></oj-bind-text>
+          </div>
+          <!-- Add Page specific actions etc -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page specific title and actions for desktop formfactor -->
+<div class="vb-content-header oj-flex oj-sm-flex-1 oj-sm-only-hide oj-sm-align-items-center">
+  <div role="image" class="vb-content-header-image-stripe"></div>
+  <div class="oj-flex-item">
+    <div class="oj-typography-body-lg oj-typography-semi-bold">
+      <oj-bind-text value="main newdepartment"></oj-bind-text>
+    </div>
+    <!-- Add Page specific actions etc -->
+  </div>
+</div>
+<div class="oj-flex">
+  <oj-toolbar id="oj-toolbar-for-oj-table--943952893-1" chroming="solid" class="oj-flex-item oj-sm-12 oj-md-12">
+    <oj-button disabled="[[ $variables.oj_table_943952893_1SelectedId === '' ]]"
+      on-oj-action="[[$listeners.editDepartmentButtonClicked]]">Edit newDepartment</oj-button>
+    <oj-button label="Move to Employees" on-oj-action="[[$listeners.buttonAction]]"></oj-button>
+  </oj-toolbar>
+</div>
+<div class="oj-flex">
+  <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12"
+    data="[[$variables.departmentListSDP]]"
+    columns='[{"headerText":"Department","field":"department"},{"headerText":"Location","field":"locationObject","sortProperty":"locationObject.location","template":"locationCellTemplate2"}]'
+    id="oj-table--943952893-1" selection-mode.row="single" selection-mode.column="single"
+    on-first-selected-row-changed="[[ $listeners.oj_table_943952893_1SelectionChanged ]]">
+    <template slot="locationCellTemplate2">
+      <oj-bind-text value="[[ $current.data.items[0] ? $current.data.items[0].location : undefined ]]"></oj-bind-text>
+    </template>
+  </oj-table>
+</div>
+
+

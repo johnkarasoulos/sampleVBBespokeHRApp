@@ -1,0 +1,124 @@
+{
+  "title": "Create Employee",
+  "description": "Creates new Employee",
+  "variables": {
+    "createEmployeeChainInProgress": {
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "departmentListSDP": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "businessObjects/getall_Department",
+        "keyAttributes": "id",
+        "itemsPath": "items",
+        "responseType": "getallDepartmentResponse",
+        "uriParameters": {}
+      }
+    },
+    "employee": {
+      "type": "page:createEmployeeRequest"
+    }
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.createEmployeeRequest": {
+      "endpoint": "create_Employee",
+      "service": "businessObjects",
+      "path": "request"
+    },
+    "@decorators.getallDepartmentResponse": {
+      "endpoint": "getall_Department",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "businessObjectsServiceErrorResponseType": {
+      "body": {
+        "status": "string",
+        "title": "string",
+        "o:errorDetails": [
+          {
+            "detail": "string",
+            "o:errorCode": "string"
+          }
+        ]
+      },
+      "status": "number"
+    },
+    "createEmployeeRequest": {
+      "country": "string",
+      "department": "number",
+      "email": "string",
+      "hireDate": "string",
+      "name": "string",
+      "picture": "string"
+    },
+    "getallDepartmentResponse": {
+      "items": [
+        {
+          "department": "string",
+          "id": "number"
+        }
+      ]
+    }
+  },
+  "eventListeners": {
+    "backButtonClicked": {
+      "chains": [
+        {
+          "chainId": "goBackChain"
+        }
+      ]
+    },
+    "saveButtonClicked": {
+      "chains": [
+        {
+          "chainId": "createEmployeeChain"
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chainId": "application:toggleDrawerHandler"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-input-date": {
+        "path": "ojs/ojdatetimepicker"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-select-single": {
+        "path": "ojs/ojselectsingle"
+      },
+      "oj-toolbar": {
+        "path": "ojs/ojtoolbar"
+      },
+      "oj-validation-group": {
+        "path": "ojs/ojvalidationgroup"
+      }
+    },
+    "modules": {
+      "ojValidationBase": {
+        "path": "ojs/ojvalidation-base"
+      }
+    }
+  },
+  "security": {
+    "access": {
+      "requiresAuthentication": false
+    }
+  }
+}

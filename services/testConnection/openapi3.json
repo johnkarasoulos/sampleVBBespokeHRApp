@@ -1,0 +1,24 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Restcountries2",
+        "version": "2.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://restcountries.com",
+            "description": "Restcountries Com"
+        }
+    ],
+    "paths": {
+        "/v2": {
+            "get": {
+                "operationId": "getV2",
+                "responses": {},
+                "x-vb": {
+                    "actionHint": "getMany"
+                }
+            }
+        }
+    }
+}

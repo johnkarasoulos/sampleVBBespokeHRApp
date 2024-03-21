@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "root": "navigateToMainEmployees",
+  "actions": {
+    "navigateToMainEmployees": {
+      "module": "vb/action/builtin/navigateAction",
+      "parameters": {
+        "page": "main-employees"
+      }
+    }
+  },
+  "variables": {}
+}

@@ -1,0 +1,21 @@
+{
+  "root": "navigateToEdit",
+  "variables": {
+    "departmentId": {
+      "type": "string",
+      "input": "fromCaller",
+      "required": true
+    }
+  },
+  "actions": {
+    "navigateToEdit": {
+      "module": "vb/action/builtin/navigateAction",
+      "parameters": {
+        "page": "main-edit-department",
+        "params": {
+          "departmentId": "[[ $variables.departmentId ]]"
+        }
+      }
+    }
+  }
+}

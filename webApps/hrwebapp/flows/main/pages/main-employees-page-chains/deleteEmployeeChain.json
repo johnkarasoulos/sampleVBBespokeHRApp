@@ -1,0 +1,76 @@
+{
+  "root": "deleteEmployee",
+  "variables": {
+    "employeeId": {
+      "type": "string",
+      "input": "fromCaller",
+      "required": true
+    }
+  },
+  "actions": {
+    "deleteEmployee": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "businessObjects/delete_Employee",
+        "uriParams": {
+          "Employee_Id": "[[ $variables.employeeId ]]"
+        }
+      },
+      "outcomes": {
+        "success": "resetSelection",
+        "failure": "fireErrorNotification"
+      }
+    },
+    "resetSelection": {
+      "module": "vb/action/builtin/resetVariablesAction",
+      "parameters": {
+        "variables": [
+          "[[ '$page.variables.oj_table_381946666_1SelectedId' ]]"
+        ]
+      },
+      "outcomes": {
+        "success": "refreshDataProvider"
+      },
+      "description": "Resets selection variable",
+      "label": "Reset selection"
+    },
+    "refreshDataProvider": {
+      "module": "vb/action/builtin/fireDataProviderEventAction",
+      "outcomes": {
+        "success": "fireDataProviderEventEmployeeListSDP2"
+      },
+      "parameters": {
+        "refresh": null,
+        "target": "[[ $page.variables.employeeListSDP ]]"
+      }
+    },
+    "fireSuccessNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "summary": "Employee deleted",
+        "message": "[[ 'Employee [' + $variables.employeeId + '] successfully deleted' ]]",
+        "type": "confirmation",
+        "displayMode": "transient"
+      }
+    },
+    "fireErrorNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "summary": "Delete failed",
+        "message": "[[ 'Could not delete data: status ' + $chain.results.deleteEmployee.status ]]",
+        "type": "error",
+        "displayMode": "persist"
+      }
+    },
+    "fireDataProviderEventEmployeeListSDP2": {
+      "module": "vb/action/builtin/fireDataProviderEventAction",
+      "parameters": {
+        "refresh": null,
+        "target": "[[ $page.variables.employeeListSDP2 ]]"
+      },
+      "outcomes": {
+        "success": "fireSuccessNotification"
+      }
+    }
+  }
+}

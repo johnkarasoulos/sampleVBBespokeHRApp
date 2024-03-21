@@ -1,0 +1,232 @@
+{
+  "tests": {
+    "CountryCodeFailse": {
+      "parameters": {
+        "value": "AAA"
+      },
+      "expectations": {
+        "actions": {
+          "notValidCode": {
+            "parameters": [
+              {
+                "parameter": "summary",
+                "matcher": "to.equal",
+                "expected": "The country code should be more 2 chars"
+              },
+              {
+                "parameter": "displayMode",
+                "matcher": "to.equal",
+                "expected": "persist"
+              },
+              {
+                "parameter": "type",
+                "matcher": "to.equal",
+                "expected": "error"
+              }
+            ]
+          }
+        },
+        "returns": [
+          {
+            "matcher": "to.be.undefined"
+          }
+        ]
+      }
+    },
+    "CountryExistFR": {
+      "parameters": {
+        "value": "FR"
+      },
+      "mocks": {
+        "callRestCountriesGetAlphaCode1": {
+          "return": {
+            "status": 200,
+            "headers": {},
+            "body": {
+              "name": "France",
+              "topLevelDomain": [
+                ".fr"
+              ],
+              "alpha2Code": "FR",
+              "alpha3Code": "FRA",
+              "callingCodes": [
+                "33"
+              ],
+              "capital": "Paris",
+              "altSpellings": [
+                "FR",
+                "French Republic",
+                "République française"
+              ],
+              "subregion": "Western Europe",
+              "region": "Europe",
+              "population": 67391582,
+              "latlng": [
+                46,
+                2
+              ],
+              "demonym": "French",
+              "area": 640679,
+              "gini": 32.4,
+              "timezones": [
+                "UTC-10:00",
+                "UTC-09:30",
+                "UTC-09:00",
+                "UTC-08:00",
+                "UTC-04:00",
+                "UTC-03:00",
+                "UTC+01:00",
+                "UTC+02:00",
+                "UTC+03:00",
+                "UTC+04:00",
+                "UTC+05:00",
+                "UTC+10:00",
+                "UTC+11:00",
+                "UTC+12:00"
+              ],
+              "borders": [
+                "AND",
+                "BEL",
+                "DEU",
+                "ITA",
+                "LUX",
+                "MCO",
+                "ESP",
+                "CHE"
+              ],
+              "nativeName": "France",
+              "numericCode": "250",
+              "flags": {
+                "svg": "https://flagcdn.com/fr.svg",
+                "png": "https://flagcdn.com/w320/fr.png"
+              },
+              "currencies": [
+                {
+                  "code": "EUR",
+                  "name": "Euro",
+                  "symbol": "€"
+                }
+              ],
+              "languages": [
+                {
+                  "iso639_1": "fr",
+                  "iso639_2": "fra",
+                  "name": "French",
+                  "nativeName": "français"
+                }
+              ],
+              "translations": {
+                "br": "Frañs",
+                "pt": "França",
+                "nl": "Frankrijk",
+                "hr": "Francuska",
+                "fa": "فرانسه",
+                "de": "Frankreich",
+                "es": "Francia",
+                "fr": "France",
+                "ja": "フランス",
+                "it": "Francia",
+                "hu": "Franciaország"
+              },
+              "flag": "https://flagcdn.com/fr.svg",
+              "regionalBlocs": [
+                {
+                  "acronym": "EU",
+                  "name": "European Union"
+                }
+              ],
+              "cioc": "FRA",
+              "independent": true
+            }
+          }
+        }
+      },
+      "expectations": {
+        "actions": {
+          "CannotFindCountry": {
+            "parameters": [
+              {
+                "parameter": "message",
+                "matcher": "to.equal",
+                "expected": 200
+              },
+              {
+                "parameter": "summary",
+                "matcher": "to.equal",
+                "expected": "Cannot find the country"
+              }
+            ]
+          }
+        },
+        "variables": [
+          {
+            "variable": "$page.variables.CountryTypeVar",
+            "matcher": "to.deep.equal",
+            "expected": {
+              "timezones": []
+            }
+          }
+        ],
+        "returns": [
+          {
+            "matcher": "to.be.undefined"
+          }
+        ]
+      }
+    },
+    "Failed2FindCountry": {
+      "parameters": {
+        "value": "ZZ"
+      },
+      "mocks": {
+        "callRestCountriesGetAlphaCode1": {
+          "return": {
+            "status": 404,
+            "headers": {},
+            "body": {
+              "type": "HTTP://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1",
+              "status": 404,
+              "title": "Not Found",
+              "detail": {
+                "status": 404,
+                "message": "Not Found"
+              }
+            }
+          }
+        }
+      },
+      "expectations": {
+        "actions": {
+          "CannotFindCountry": {
+            "parameters": [
+              {
+                "parameter": "message",
+                "matcher": "to.equal",
+                "expected": 404
+              },
+              {
+                "parameter": "summary",
+                "matcher": "to.equal",
+                "expected": "Cannot find the country"
+              }
+            ]
+          }
+        },
+        "variables": [
+          {
+            "variable": "$page.variables.CountryTypeVar",
+            "matcher": "to.deep.equal",
+            "expected": {
+              "timezones": []
+            }
+          }
+        ],
+        "returns": [
+          {
+            "matcher": "to.be.undefined"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "main",
+  "description": "Flow main",
+  "defaultPage": "main-departments",
+  "services": {},
+  "types": {},
+  "variables": {},
+  "security": {
+    "access": {
+      "requiresAuthentication": true
+    }
+  },
+  "@dt": {
+    "chains": {
+      "validateFormChain2": {
+        "autowire": {
+          "contextKey": "vb-quickstarts-js",
+          "name": "validateFormChain"
+        }
+      }
+    }
+  }
+}

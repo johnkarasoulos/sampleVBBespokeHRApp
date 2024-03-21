@@ -1,0 +1,156 @@
+{
+    "fields": [
+        {
+            "type": "number",
+            "name": "id",
+            "key": true,
+            "oid": "d8a63755-1485-494a-9edd-75b5fec1c6b6",
+            "required": true,
+            "unique": true,
+            "displayLabel": "Id"
+        },
+        {
+            "type": "datetime",
+            "name": "creationDate",
+            "oid": "7c6511bd-c4e9-47e9-a4cd-b7c6d76f6ac4",
+            "displayLabel": "Created",
+            "historyType": "timeCreated"
+        },
+        {
+            "type": "datetime",
+            "name": "lastUpdateDate",
+            "oid": "6a729737-8754-46b0-a18e-b8f624f0e354",
+            "displayLabel": "Last Updated",
+            "historyType": "timeUpdated"
+        },
+        {
+            "type": "string",
+            "name": "createdBy",
+            "oid": "a20cdcf3-ea4d-4f52-8946-0ce425690b24",
+            "displayLabel": "Created By",
+            "historyType": "createdBy"
+        },
+        {
+            "type": "string",
+            "name": "lastUpdatedBy",
+            "oid": "80257600-e1af-49d5-a636-88e65ffc2d1c",
+            "displayLabel": "Last Updated By",
+            "historyType": "updatedBy"
+        },
+{
+            "type": "number",
+            "name": "abcsChangeNumber",
+            "oid": "12793573-98d8-4b23-90b9-c698eb0b8e4d",
+            "displayLabel": "Version Number",
+            "historyType": "versionNumber"
+        },
+        {
+            "type": "string",
+            "name": "location",
+            "oid": "3449de04-79a1-4731-9f43-e685027bb735",
+            "required": true,
+            "displayLabel": "Location"
+        }
+    ],
+    "name": "Location",
+    "oid": "a7216e76-8122-4c68-83c5-2f9cf727dd0f",
+    "displayLabel": "Location",
+    "relationships": [
+        {
+            "name": "departmentCollection",
+            "reverseRelationship": "locationObject",
+            "targetEntity": "Department",
+            "type": "incoming",
+            "displayField": "location"
+        }
+    ],
+    "security": {
+        "type": "local",
+        "acl": [
+            {
+                "roleId": "approle.anonymous.user",
+                "privileges": [
+                    {
+                        "name": "view",
+                        "value": true
+                    },
+                    {
+                        "name": "create",
+                        "value": true
+                    },
+                    {
+                        "name": "update",
+                        "value": true
+                    },
+                    {
+                        "name": "delete",
+                        "value": true
+                    }
+                ]
+            },
+{
+                "roleId": "approle.authenticated.user",
+                "privileges": [
+                    {
+                        "name": "view",
+                        "value": true
+                    },
+                    {
+                        "name": "create",
+                        "value": true
+                    },
+                    {
+                        "name": "update",
+                        "value": true
+                    },
+                    {
+                        "name": "delete",
+                        "value": true
+                    }
+                ]
+            },
+            {
+                "roleId": "adminstrator",
+                "privileges": [
+                    {
+                        "name": "view",
+                        "value": true
+                    },
+                    {
+                        "name": "create",
+                        "value": false
+                    },
+                    {
+                        "name": "update",
+                        "value": false
+                    },
+                    {
+                        "name": "delete",
+                        "value": false
+                    }
+                ]
+            }            ,
+            {
+                "roleId": "PowerUser",
+                "privileges": [
+                    {
+                        "name": "view",
+                        "value": true
+                    },
+                    {
+                        "name": "create",
+                        "value": false
+                    },
+                    {
+                        "name": "update",
+                        "value": false
+                    },
+                    {
+                        "name": "delete",
+                        "value": false
+                    }
+                ]
+            }
+        ]
+    }
+}

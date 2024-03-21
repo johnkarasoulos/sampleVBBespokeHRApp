@@ -1,0 +1,97 @@
+{
+  "title": "main newdepartment",
+  "description": "",
+  "variables": {
+    "departmentListSDP": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "businessObjects/getall_Department",
+        "keyAttributes": "id",
+        "itemsPath": "items",
+        "responseType": "getallDepartmentResponse"
+      }
+    },
+    "oj_table_943952893_1SelectedId": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.getallDepartmentResponse": {
+      "endpoint": "getall_Department",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "getallDepartmentResponse": {
+      "items": [
+        {
+          "department": "string",
+          "id": "number",
+          "locationObject": {
+            "items": [
+              {
+                "location": "string"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "eventListeners": {
+    "buttonAction": {
+      "chains": [
+        {
+          "chainId": "ButtonActionChain"
+        }
+      ]
+    },
+    "editDepartmentButtonClicked": {
+      "chains": [
+        {
+          "chainId": "navigateToEditDepartmentChain",
+          "parameters": {
+            "departmentId": "[[ $variables.oj_table_943952893_1SelectedId ]]"
+          }
+        }
+      ]
+    },
+    "oj_table_943952893_1SelectionChanged": {
+      "chains": [
+        {
+          "chainId": "oj_table_943952893_1ChangeSelectionChain",
+          "parameters": {
+            "departmentId": "[[ $event.detail.value.key || '' ]]"
+          }
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chainId": "application:toggleDrawerHandler"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-table": {
+        "path": "ojs/ojtable"
+      },
+      "oj-toolbar": {
+        "path": "ojs/ojtoolbar"
+      }
+    }
+  },
+  "security": {
+    "access": {
+      "requiresAuthentication": false
+    }
+  }
+}

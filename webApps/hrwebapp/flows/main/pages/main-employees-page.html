@@ -1,0 +1,74 @@
+<!-- Mobile only header and page title -->
+<header role="banner" class="oj-sm-flex-initial vb-web-applayout-header oj-md-hide">
+  <div role="image" class="vb-web-applayout-header-image-stripe"></div>
+  <div class="oj-flex-bar oj-sm-align-items-center vb-web-applayout-header-content">
+    <!-- Navigator toggle button will render only if we have a drawer -->
+    <oj-bind-if test="[[ document.querySelector('oj-vb-fragment[name=\'shell-drawer\']') ]]">
+      <div class="oj-flex-bar">
+        <oj-button on-oj-action="[[$listeners.toggleDrawer]]" chroming="borderless"
+                   display="icons">
+          <span slot="startIcon" class="oj-ux-ico-menu"></span>
+          <span><oj-bind-text value="[[$application.translations.app.app_title_navigation_drawer]]"></oj-bind-text></span>
+        </oj-button>
+      </div>
+    </oj-bind-if>
+    <!-- Page specific title and actions with overflow menu displayed -->
+    <div class="oj-sm-margin-2x-horizontal oj-sm-align-items-center oj-md-hide oj-sm-flex-1">
+      <div class="vb-content-header oj-flex oj-sm-flex-items-initial oj-sm-align-items-center">
+        <div class="oj-flex-item">
+          <div class="oj-typography-body-lg oj-typography-semi-bold">
+            <oj-bind-text value="Employees"></oj-bind-text>
+          </div>
+          <!-- Add Page specific actions etc -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Page specific title and actions for desktop formfactor -->
+<div class="vb-content-header oj-flex oj-sm-flex-1 oj-sm-only-hide oj-sm-align-items-center">
+  <div role="image" class="vb-content-header-image-stripe"></div>
+  <div class="oj-flex-item">
+    <div class="oj-typography-body-lg oj-typography-semi-bold">
+      <oj-bind-text value="main employees"></oj-bind-text>
+    </div>
+    <!-- Add Page specific actions etc -->
+  </div>
+</div>
+<div class="oj-flex">
+  <div class="oj-panel oj-flex-item oj-sm-12 oj-md-7">
+    <div class="oj-flex">
+      <oj-toolbar id="oj-toolbar-for-oj-table--381946666-1" chroming="solid" class="oj-flex-item oj-sm-12 oj-md-12">
+        <oj-button on-oj-action="[[$listeners.createEmployeeButtonClicked]]">Create</oj-button>
+        <oj-button label="Show Departments" on-oj-action="[[$listeners.buttonAction]]"></oj-button>
+        <oj-button disabled="[[ $variables.oj_table_381946666_1SelectedId === '' ]]"
+          on-oj-action="[[$listeners.editEmployeeButtonClicked]]">Edit</oj-button>
+        <oj-button disabled="[[ $variables.oj_table_381946666_1SelectedId === '' ]]"
+          on-oj-action="[[$listeners.deleteEmployeeButtonClicked]]">Delete</oj-button>
+      </oj-toolbar>
+    </div>
+    <div class="oj-flex">
+      <oj-table scroll-policy="loadMoreOnScroll" class="oj-flex-item oj-sm-12 oj-md-12"
+        data="[[$variables.employeeListSDP]]"
+        columns='[{"headerText":"picture","sortable":"disabled","template":"multiFieldCellTemplate1"},{"headerText":"Name","field":"name"},{"headerText":"Department","field":"departmentObject","sortProperty":"departmentObject.department","template":"departmentCellTemplate3"}]'
+        id="oj-table--381946666-1" selection-mode.row="single" selection-mode.column="single"
+        on-first-selected-row-changed="[[ $listeners.oj_table_381946666_1SelectionChanged ]]">
+        <template slot="multiFieldCellTemplate1">
+          <img :src="[[ $current.row.picture ]]" width="32" height="32">
+        </template>
+        <template slot="departmentCellTemplate3">
+          <oj-bind-text value="[[ $current.data.items[0] ? $current.data.items[0].department : undefined ]]"></oj-bind-text>
+        </template>
+      </oj-table>
+    </div>
+  </div>
+  <oj-chart type="bar" class="oj-sm-flex-initial oj-flex-item oj-sm-12 oj-md-5" style="max-width:100%;"
+    data="[[$variables.employeeListSDP2]]" y-axis.title="Salary" x-axis.title="Employee name" legend.rendered="off">
+    <template slot="itemTemplate">
+      <oj-chart-item value="[[ $current.data.salary ]]" group-id="[[[ $current.data.name ]]]" series-id="Undefined"></oj-chart-item>
+    </template>
+  </oj-chart>
+</div>
+
+

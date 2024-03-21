@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "root": "navigateToMainDepartments",
+  "actions": {
+    "navigateToMainDepartments": {
+      "module": "vb/action/builtin/navigateAction",
+      "parameters": {
+        "page": "main-departments"
+      }
+    }
+  },
+  "variables": {}
+}

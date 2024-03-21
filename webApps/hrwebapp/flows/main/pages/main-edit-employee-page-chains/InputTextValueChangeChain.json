@@ -1,0 +1,44 @@
+{
+  "description": "",
+  "root": "callRestGetAlphaCode",
+  "actions": {
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "leaf",
+        "summary": "[[ $chain.results.callRestGetAlphaCode.message.summary ]]",
+        "type": "error",
+        "displayMode": "persist"
+      }
+    },
+    "callRestGetAlphaCode": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "countries/getAlphaCode",
+        "uriParams": {
+          "code": "{{ $page.variables.employee.country }}"
+        }
+      },
+      "outcomes": {
+        "failure": "fireNotification",
+        "success": "assignVariablesCountryTypeVar"
+      }
+    },
+    "assignVariablesCountryTypeVar": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.CountryTypeVar": {
+          "source": "{{ $chain.results.callRestGetAlphaCode.body }}",
+          "auto": "always"
+        }
+      }
+    }
+  },
+  "variables": {
+    "value": {
+      "required": true,
+      "type": "any",
+      "input": "fromCaller"
+    }
+  }
+}

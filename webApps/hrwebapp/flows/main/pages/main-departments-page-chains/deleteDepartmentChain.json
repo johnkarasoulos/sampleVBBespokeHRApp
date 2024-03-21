@@ -1,0 +1,66 @@
+{
+  "root": "deleteDepartment",
+  "variables": {
+    "departmentId": {
+      "type": "string",
+      "input": "fromCaller",
+      "required": true
+    }
+  },
+  "actions": {
+    "deleteDepartment": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "businessObjects/delete_Department",
+        "uriParams": {
+          "Department_Id": "[[ $variables.departmentId ]]"
+        }
+      },
+      "outcomes": {
+        "success": "resetSelection",
+        "failure": "fireErrorNotification"
+      }
+    },
+    "resetSelection": {
+      "module": "vb/action/builtin/resetVariablesAction",
+      "parameters": {
+        "variables": [
+          "[[ '$page.variables.oj_table_1410790259_1SelectedId' ]]"
+        ]
+      },
+      "outcomes": {
+        "success": "refreshDataProvider"
+      },
+      "description": "Resets selection variable",
+      "label": "Reset selection"
+    },
+    "refreshDataProvider": {
+      "module": "vb/action/builtin/fireDataProviderEventAction",
+      "outcomes": {
+        "success": "fireSuccessNotification"
+      },
+      "parameters": {
+        "refresh": null,
+        "target": "[[ $page.variables.departmentListSDP ]]"
+      }
+    },
+    "fireSuccessNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "summary": "Department deleted",
+        "message": "[[ 'Department [' + $variables.departmentId + '] successfully deleted' ]]",
+        "type": "confirmation",
+        "displayMode": "transient"
+      }
+    },
+    "fireErrorNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "summary": "Delete failed",
+        "message": "[[ 'Could not delete data: status ' + $chain.results.deleteDepartment.status ]]",
+        "type": "error",
+        "displayMode": "persist"
+      }
+    }
+  }
+}

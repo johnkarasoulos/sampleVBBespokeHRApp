@@ -1,0 +1,39 @@
+{
+  "root": "loadDepartment",
+  "actions": {
+    "loadDepartment": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "businessObjects/get_Department",
+        "uriParams": {
+          "Department_Id": "[[ $page.variables.departmentId ]]"
+        },
+        "responseType": "page:getDepartmentResponse"
+      },
+      "outcomes": {
+        "success": "assignPayload",
+        "failure": "fireErrorNotification"
+      }
+    },
+    "assignPayload": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.department": {
+          "source": "{{ $chain.results.loadDepartment.body }}"
+        },
+        "$page.variables.departmentETag": {
+          "source": "[[ $chain.results.loadDepartment.headers.get('ETag') ]]"
+        }
+      }
+    },
+    "fireErrorNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "summary": "Could not load data",
+        "message": "{{ 'Could not load data: status ' + $chain.results.loadDepartment.status }}",
+        "type": "error",
+        "displayMode": "persist"
+      }
+    }
+  }
+}

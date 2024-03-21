@@ -1,0 +1,205 @@
+{
+  "title": "Edit Employee",
+  "description": "Updates single Employee record",
+  "variables": {
+    "CountryTypeVar": {
+      "type": "getAlphaCode"
+    },
+    "density": {
+      "type": "any"
+    },
+    "departmentListSDP": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "businessObjects/getall_Department",
+        "keyAttributes": "id",
+        "itemsPath": "items",
+        "responseType": "getallDepartmentResponse",
+        "uriParameters": {}
+      }
+    },
+    "employee": {
+      "type": "page:getEmployeeResponse"
+    },
+    "employeeETag": {
+      "type": "string"
+    },
+    "employeeId": {
+      "type": "string",
+      "required": true,
+      "input": "fromUrl"
+    },
+    "isValidInput": {
+      "type": "boolean",
+      "defaultValue": true
+    },
+    "saveEmployeeChainInProgress": {
+      "type": "boolean",
+      "defaultValue": false
+    },
+    "testRegionVar": {
+      "type": "testRegion"
+    }
+
+  },
+  "metadata": {},
+  "types": {
+    "@decorators.getallDepartmentResponse": {
+      "endpoint": "getall_Department",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "@decorators.getAlphaCode": {
+      "endpoint": "getAlphaCode",
+      "service": "countries",
+      "path": "response"
+    },
+    "@decorators.getEmployeeResponse": {
+      "endpoint": "get_Employee",
+      "service": "businessObjects",
+      "path": "response"
+    },
+    "@decorators.testRegion": {
+      "endpoint": "getAlphaCode",
+      "service": "countries",
+      "path": "response"
+    },
+    "businessObjectsServiceErrorResponseType": {
+      "body": {
+        "status": "string",
+        "title": "string",
+        "o:errorDetails": [
+          {
+            "detail": "string",
+            "o:errorCode": "string"
+          }
+        ]
+      },
+      "status": "number"
+    },
+    "getallDepartmentResponse": {
+      "items": [
+        {
+          "department": "string",
+          "id": "number"
+        }
+      ]
+    },
+    "getAlphaCode": {
+      "area": "number",
+      "flag": "string",
+      "population": "number",
+      "region": "string",
+      "timezones": "string[]",
+      "countryDensity": "number"
+    },
+    "getEmployeeResponse": {
+      "country": "string",
+      "department": "number",
+      "email": "string",
+      "hireDate": "string",
+      "name": "string",
+      "picture": "string",
+      "salary": "number"
+    },
+    "testRegion": {
+      "flag": "string",
+      "name": "string",
+      "population": "number",
+      "region": "string"
+    }
+  },
+  "eventListeners": {
+    "backButtonClicked": {
+      "chains": [
+        {
+          "chainId": "goBackChain"
+        }
+      ]
+    },
+    "inputNumberValue": {
+      "chains": [
+        {
+          "chainId": "InputNumberValueChangeChain",
+          "parameters": {
+            "value": "{{ $event.detail.value }}"
+          }
+        }
+      ]
+    },
+    "inputTextValue": {
+      "chains": [
+        {
+          "chain": "getContryDataAndFlg",
+          "parameters": {
+            "value": "{{ $event.detail.value }}"
+          }
+
+        }
+      ]
+    },
+    "saveButtonClicked": {
+      "chains": [
+        {
+          "chainId": "saveEmployeeChain"
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chainId": "application:toggleDrawerHandler"
+        }
+      ]
+    },
+    "vbEnter": {
+      "chains": [
+        {
+          "chainId": "loadEmployeeChain"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-avatar": {
+        "path": "ojs/ojavatar"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-input-date": {
+        "path": "ojs/ojdatetimepicker"
+      },
+      "oj-input-number": {
+        "path": "ojs/ojinputnumber"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-select-single": {
+        "path": "ojs/ojselectsingle"
+      },
+      "oj-toolbar": {
+        "path": "ojs/ojtoolbar"
+      },
+      "oj-validation-group": {
+        "path": "ojs/ojvalidationgroup"
+      }
+    },
+    "modules": {
+      "ojValidationBase": {
+        "path": "ojs/ojvalidation-base"
+      }
+    }
+  },
+  "security": {
+    "access": {
+      "requiresAuthentication": false
+    }
+  }
+}

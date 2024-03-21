@@ -1,0 +1,16 @@
+{
+  "userroles":[
+    {
+      "name": "Administrator",
+      "description": "",
+      "id": "adminstrator",
+      "defaultMapping": {}
+    }    ,
+    {
+      "name": "PowerUser",
+      "description": "",
+      "id": "PowerUser",
+      "defaultMapping": {}
+    }
+  ]
+}
